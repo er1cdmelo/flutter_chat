@@ -1,15 +1,11 @@
-// ignore_for_file: avoid_print
-
-import 'dart:async';
 import 'package:app_testes/core/data/model/chat_message.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app_testes/feature/chat/bloc/chat_event.dart';
 import 'package:app_testes/feature/chat/bloc/chat_state.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:logger/logger.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
-  final _chatStateController =
-      BehaviorSubject<ChatState>.seeded(const ChatInitialState());
+  final logger = Logger();
   final _messages = {
     "chat_id": 0,
     "list": [],
@@ -23,19 +19,19 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<ClearAnswer>(_mapClearAnswerEventToState);
   }
 
-  Stream<ChatState> get output => _chatStateController.stream;
-  Sink<ChatState> get input => _chatStateController.sink;
+  // Stream<ChatState> get output => _chatStateController.stream;
+  // Sink<ChatState> get input => _chatStateController.sink;
 
-  ChatState get value => _chatStateController.value;
+  // ChatState get value => _chatStateController.value;
 
-  final _chatEventController = StreamController<ChatEvent>();
+  // final _chatEventController = StreamController<ChatEvent>();
 
-  Sink<ChatEvent> get eventInput => _chatEventController.sink;
+  // Sink<ChatEvent> get eventInput => _chatEventController.sink;
 
-  void dispose() {
-    _chatEventController.close();
-    _chatStateController.close();
-  }
+  // void dispose() {
+  //   _chatEventController.close();
+  //   _chatStateController.close();
+  // }
 
   void _mapSendMessageEventToState(
     SendMessage event,
@@ -50,7 +46,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
             .toList(),
       ));
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
   }
 
@@ -62,7 +58,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       // _answering = event.answerTo;
       emit(ChatMessageAnswering(event.answerTo));
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
   }
 
@@ -73,7 +69,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     try {
       emit(ChatMessageClearedAnswer());
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
   }
 }

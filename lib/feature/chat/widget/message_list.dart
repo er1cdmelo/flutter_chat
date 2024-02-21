@@ -5,6 +5,7 @@ import 'package:app_testes/feature/chat/bloc/chat_state.dart';
 import 'package:app_testes/feature/chat/widget/message_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:swipe_to/swipe_to.dart';
 
 class MessageList extends StatefulWidget {
@@ -16,14 +17,16 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageListState extends State<MessageList> {
+  final ScrollController _scroll = ScrollController();
   List<ChatMessage>? messages;
+  var logger = Logger();
 
   void addToAnswer(ChatMessage message) {
     try {
       context.read<ChatBloc>().add(AnswerMessage(message));
       widget.ctrlFocus.requestFocus();
     } catch (e) {
-      print(e);
+      logger.e(e);
     }
   }
 
@@ -33,10 +36,17 @@ class _MessageListState extends State<MessageList> {
       builder: (context, state) {
         if (state is ChatMessagesLoaded) {
           messages = state.messages;
+          Future.delayed(Duration.zero, () {
+            _scroll.animateTo(
+              _scroll.position.maxScrollExtent,
+              duration: const Duration(seconds: 1),
+              curve: Curves.fastOutSlowIn,
+            );
+          });
         }
 
         return messages != null
-            ? _buildMessages()
+            ? _buildMessages(_scroll)
             : const Center(
                 child: Text("..."),
               );
@@ -44,8 +54,9 @@ class _MessageListState extends State<MessageList> {
     );
   }
 
-  Widget _buildMessages() {
+  Widget _buildMessages(ScrollController scroll) {
     return ListView.separated(
+      controller: scroll,
       itemCount: messages!.length,
       itemBuilder: (_, index) {
         return SwipeTo(

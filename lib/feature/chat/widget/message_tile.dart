@@ -47,10 +47,22 @@ class MessageTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 //textDirection: TextDirection.rtl,
                 children: [
-                  Text(
-                    message.content,
-                    style: const TextStyle(fontSize: 16),
-                  ),
+                  message.isSticker && message.image != null
+                      ? Container(
+                          constraints: const BoxConstraints(
+                            maxHeight: 250,
+                            maxWidth: 200,
+                          ),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: MemoryImage(message.image!),
+                            ),
+                          ),
+                        )
+                      : Text(
+                          message.content,
+                          style: const TextStyle(fontSize: 16),
+                        ),
                   const SizedBox(
                     width: 4,
                   ),
@@ -80,7 +92,17 @@ class MessageTile extends StatelessWidget {
           const SizedBox(
             width: 6,
           ),
-          Text(msg.content),
+          msg.image != null
+              ? Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(msg.image!),
+                    ),
+                  ),
+                )
+              : Text(msg.content),
         ],
       ),
     );
