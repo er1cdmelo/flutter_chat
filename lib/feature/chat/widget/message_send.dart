@@ -106,7 +106,8 @@ class _MessageSendState extends State<MessageSend> {
                             }
                           },
                           allowedMimeTypes: [
-                            "image/png", /*...*/
+                            "image/png",
+                            "image/gif" /*...*/
                           ],
                         ),
                       ),

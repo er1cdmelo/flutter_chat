@@ -50,8 +50,8 @@ class MessageTile extends StatelessWidget {
                   message.isSticker && message.image != null
                       ? Container(
                           constraints: const BoxConstraints(
-                            maxHeight: 250,
-                            maxWidth: 200,
+                            maxHeight: 200,
+                            maxWidth: 150,
                           ),
                           decoration: BoxDecoration(
                             image: DecorationImage(
