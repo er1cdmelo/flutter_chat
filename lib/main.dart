@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: HomePage(),
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
@@ -24,10 +24,25 @@ class MainApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final List<DropdownMenuEntry> entries = [];
+
+  void addEntries() {
+    if (entries.isNotEmpty) return;
+    for (int i = 0; i < 5; i++) {
+      DropdownMenuEntry entry = DropdownMenuEntry(
+        value: i,
+        label: "Valor ${i.toString()}",
+      );
+
+      entries.add(entry);
+    }
+  }
 
   @override
   Widget build(context) {
+    addEntries();
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -52,6 +67,10 @@ class HomePage extends StatelessWidget {
                     Icon(Icons.chat),
                   ],
                 ),
+              ),
+              DropdownMenu(
+                dropdownMenuEntries: entries,
+                width: 150,
               ),
             ],
           ),

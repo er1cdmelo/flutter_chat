@@ -18,8 +18,8 @@ class MessageList extends StatefulWidget {
 
 class _MessageListState extends State<MessageList> {
   final ScrollController _scroll = ScrollController();
-  List<ChatMessage>? messages;
   var logger = Logger();
+  List<ChatMessage>? messages;
 
   void addToAnswer(ChatMessage message) {
     try {

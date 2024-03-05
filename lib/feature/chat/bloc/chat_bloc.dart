@@ -19,20 +19,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<ClearAnswer>(_mapClearAnswerEventToState);
   }
 
-  // Stream<ChatState> get output => _chatStateController.stream;
-  // Sink<ChatState> get input => _chatStateController.sink;
-
-  // ChatState get value => _chatStateController.value;
-
-  // final _chatEventController = StreamController<ChatEvent>();
-
-  // Sink<ChatEvent> get eventInput => _chatEventController.sink;
-
-  // void dispose() {
-  //   _chatEventController.close();
-  //   _chatStateController.close();
-  // }
-
   void _mapSendMessageEventToState(
     SendMessage event,
     Emitter<ChatState> emit,
